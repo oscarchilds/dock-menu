@@ -1,0 +1,17 @@
+{
+  "name": "dock-menu",
+  "version": "1.0.4",
+  "description": "connects to the dock-menu-api to get the latest menu",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oscar Childs",
+  "license": "ISC",
+  "bin": {
+    "dock-menu": "./bin/index.js"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
