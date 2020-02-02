@@ -1,6 +1,6 @@
 {
   "name": "dock-menu",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "connects to the dock-menu-api to get the latest menu",
   "main": "bin/index.js",
   "scripts": {
@@ -12,8 +12,8 @@
     "dock-menu": "./bin/index.js"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/oscarchilds/dock-menu"
+    "type": "git",
+    "url": "https://github.com/oscarchilds/dock-menu"
   },
   "dependencies": {
     "request": "^2.88.0"
