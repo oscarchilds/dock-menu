@@ -11,6 +11,10 @@
   "bin": {
     "dock-menu": "./bin/index.js"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/oscarchilds/dock-menu"
+  },
   "dependencies": {
     "request": "^2.88.0"
   }
