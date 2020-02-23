@@ -16,6 +16,7 @@
     "url": "https://github.com/oscarchilds/dock-menu"
   },
   "dependencies": {
+    "chalk": "^3.0.0",
     "request": "^2.88.0"
   }
 }

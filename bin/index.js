@@ -1,12 +1,19 @@
 #!/usr/bin/env node
 
 const request = require('request');
+const chalk = require('chalk')
 const version = require('../lib/version')
+const readline = require('readline');
 
 var url = 'https://dock-menu-api.herokuapp.com/menu'
 
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
 var getMenu = function () {
-  console.log('Attempting to get menu...')
+  console.log(chalk.blueBright('Attempting to get menu...'))
   request
     .get({
         url: url,
@@ -14,11 +21,11 @@ var getMenu = function () {
         headers: {'User-Agent': 'request'}
       }, (err, res, data) => {
         if (err) {
-          console.log('Error:', err);
+          console.log(chalk.red('Error:', err));
         } else if (res.statusCode !== 200) {
-          console.log('Status:', res.statusCode);
+          console.log(chalk.red('Status:', res.statusCode));
         } else {
-          console.log('Get successful!\n')
+          console.log(chalk.green('Get successful!\n'))
 
           checkForUpdates(data)
           printMenu(data)
@@ -33,7 +40,7 @@ var getMenu = function () {
 var checkForUpdates = function (data) {
   var versionArray = version.split('.')
   var currentVersion = data.currentVersion.split('.')
-  var updateText = 'An update is available! Please run <npm update -g dock-menu> to update!'
+  var updateText = chalk.green('An update is available! Please run < ') + chalk.white('npm update -g dock-menu') + chalk.green(' > to update!\n')
 
   if (currentVersion[0] > versionArray[0]) {
     console.log(updateText)
@@ -47,11 +54,25 @@ var checkForUpdates = function (data) {
 }
 
 var printMenu = function (data) {
-  var menuTable = data.menu.reduce((acc, {day, ...x}) => { acc[day] = x; return acc}, {})
-  console.table(menuTable)
+  console.log(chalk.blueBright('Menu:\n'))
+  data.menu.forEach(day => {
+    console.log(chalk.cyan(' -- ' + day.day))
+    console.log(chalk.white('    ' + day.option + '\n'))
+  });
 
-  var soupTable = data.soup.reduce((acc, {day, ...x}) => { acc[day] = x; return acc}, {})
-  console.table(soupTable)
+  rl.question(chalk.blueBright('Show soup menu? y/n '), (answer) => {
+    if (answer == 'y') {
+      console.log(chalk.blueBright('\nSoup:\n'))
+
+      data.soup.forEach(day => {
+        console.log(chalk.cyan(' -- ' + day.day))
+        console.log(chalk.white('    ' + day.option + '\n'))
+      });
+    }
+
+    console.log(chalk.blueBright('Thanks for using dock-menu!'))
+    rl.close();
+  });
 }
 
 if (process.argv.length < 3) {
